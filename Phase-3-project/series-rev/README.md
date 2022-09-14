@@ -1,7 +1,7 @@
 ##Series Review Application (Sinatra & React Application)
 The following is the structure of my application:
 
-MODELS:
+#MODELS:
     User
         Has many reviews
         Has a password
@@ -21,7 +21,7 @@ MODELS:
             foreign key: movie_id
             foreign key: user_id
 
-CONTROLLERS
+#CONTROLLERS
     application
         '/'
             > shows index
@@ -55,7 +55,7 @@ CONTROLLERS
             >redirect '/reviews/:id'
         delete '/reviews/:id/delete'ww
             > deletes old review with id == :id
-VIEWS
+#VIEWS
     index
          show latest review
     user
