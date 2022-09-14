@@ -2,6 +2,7 @@
 The following is the structure of my application:
 
 #MODELS:
+
     User
         Has many reviews
         Has a password
@@ -22,6 +23,7 @@ The following is the structure of my application:
             foreign key: user_id
 
 #CONTROLLERS
+
     application
         '/'
             > shows index
@@ -56,6 +58,7 @@ The following is the structure of my application:
         delete '/reviews/:id/delete'ww
             > deletes old review with id == :id
 #VIEWS
+
     index
          show latest review
     user
