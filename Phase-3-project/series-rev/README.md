@@ -10,9 +10,16 @@ MODELS:
             attr: password
             attr: email
     Movie:
-
-
-
+        Has many reviews
+        is unique
+            attr: movie name
+    review:
+        belongs to the user
+        belongs to the movie
+            attr: content
+            attr: rating
+            foreign key: movie_id
+            foreign key: user_id
 
 CONTROLLERS
     application
@@ -23,9 +30,12 @@ CONTROLLERS
         get '/logout'
     movie
         get '/movies/:id'
+            >shows movie/show
         get '/movies/new'
+            >shows movie/new
         post'/movies'
-            > creates nw review
+            > creates new review
+            >redirect movie/:id
     review
         get '/reviews/:id'
         get '/reviews/new'
@@ -49,4 +59,3 @@ VIEWS
         show.erb > action: delete review
         edit.erb > action: update review if owner
         new.erb > action: create review
-
