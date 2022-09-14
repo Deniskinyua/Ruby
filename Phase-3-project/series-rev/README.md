@@ -24,10 +24,15 @@ MODELS:
 CONTROLLERS
     application
         '/'
+            > shows index
     user
         get '/signup'
+            > shows signup of the user
         get '/login'
+            > shows the login of the user
         get '/logout'
+            > clears the session
+            > redirect to the movie movie
     movie
         get '/movies/:id'
             >shows movie/show
@@ -38,13 +43,17 @@ CONTROLLERS
             >redirect movie/:id
     review
         get '/reviews/:id'
+            > shows review /shows
         get '/reviews/new'
         get '/reviews/:id/edit'
+            > shows review /edit
         patch '/reviews/:id
             > updates reviews with  id == :id
+            > redirect to reviews/:id
         post '/reviews'
             > creates new review
-        delete '/reviews/:id/delete'
+            >redirect '/reviews/:id'
+        delete '/reviews/:id/delete'ww
             > deletes old review with id == :id
 VIEWS
     index
@@ -56,6 +65,7 @@ VIEWS
         show erb > show all review for movie
         new erb > create movie > post to /movies
     review
-        show.erb > action: delete review
-        edit.erb > action: update review if owner
+        show.erb > action: delete review if owner > delete to  /reviews/:id/delete
+          > link_to:/reviews/:id/
+        edit.erb > action: update review if owner > patch to /reviews/:id
         new.erb > action: create review > post to /reviews
