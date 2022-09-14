@@ -54,8 +54,8 @@ VIEWS
         view > see all reviews
     movie
         show erb > show all review for movie
-        new erb
+        new erb > create movie > post to /movies
     review
         show.erb > action: delete review
         edit.erb > action: update review if owner
-        new.erb > action: create review
+        new.erb > action: create review > post to /reviews
