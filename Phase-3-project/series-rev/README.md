@@ -1,4 +1,5 @@
-##Series Review Application (Sinatra & React Application)
+#Series Review Application (Sinatra & React Application)
+
 The following is the structure of my application:
 
 #MODELS:
