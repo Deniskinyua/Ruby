@@ -1,1 +1,21 @@
-<h1>This is the show page for an individual instance of your model.</h1>
+<h1>Reviews by <%= @user.username %>!</h1>
+
+<% unless @user.reviews.empty? %>
+  <% @user.reviews.each do |review| %>
+    <% movie = @movies.detect { |movie| movie.id == review.movie_id } %>
+    <p>Thoughts about <a href='/movies/<%= movie.id %>'><%= movie.name %></a>:</p>
+    <p><%= review.content%> </p>
+    <% if @user == current_user %>
+      <div class='current_user_actions_review_<%=review.id%>'>
+        <a href='/reviews/<%= review.id %>/edit'>edit review</a>
+        <form method='post' action='/reviews/<%= review.id %>/delete'>
+          <input type='hidden' name='_method' value='delete'>
+          <input type='submit' name='delete' value='delete review'>
+        </form>
+      </div>
+    <% end %>
+    <hr>
+  <% end %>
+<% else %>
+  <p><%= @user.username %> hasn't posted any reviews!</p>
+<% end %> 
