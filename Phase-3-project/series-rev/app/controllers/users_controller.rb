@@ -1,45 +1,50 @@
 class UsersController < ApplicationController
-
-  # GET: /users
-  get "/signup" do
-    erb :"/users/index.html"
+  get '/login' do
+    redirect "/users/#{current_user.id}" if logged_in?
+    @error = params[:error]
+    erb :'/users/login.html'
   end
 
-  # GET: /users/new
-  get "/login" do
-    erb :"/users/login.html"
+  post '/login' do
+    user = User.find_by(username: params[:username])
+    if user && user.authenticate(params[:password])
+      session[:user_id] = user.id
+      redirect "/users/#{user.id}"
+    end
+    redirect '/login?error=Invalid form submission, please try again:'
   end
 
-  # POST: /users
-  post "/login" do
-    redirect "/users/:id"
+  post '/logout' do
+    session.destroy
+    redirect back
   end
 
-  post "/logout" do
-    redirect "/"
+  get '/users/:id' do
+    @user = User.find_by(id: params[:id])
+    redirect back unless @user
+    movie_ids = @user.reviews.map { |review| review[:movie_id] }
+    @movies = Movie.all.select { |movie| movie_ids.include?(movie.id) }
+    erb :'/users/show.html'
   end
 
-  # GET: /users/5
-  get "/users/:id" do
-    erb :"/users/show.html"
+  get '/signup' do
+    redirect "/users/#{current_user.id}" if logged_in?
+    @error = params[:error]
+    erb :'/users/signup.html'
   end
 
-  post "/users/new" do
-    redirect "/login"
+  post '/signup' do
+    if params.values.any?(&:empty?) ||
+       User.find_by(username: params[:username]) ||
+       User.find_by(email: params[:email])
+      redirect '/signup?error=Invalid form submission, please try again:'
+    end
+    # there's no way that posting a clear password like this is secure
+    User.create(
+      username: params[:username],
+      email: params[:email],
+      password: params[:password]
+    )
+    redirect :login
   end
-
-  # GET: /users/5/edit
-  #get "/users/:id/edit" do
-  #  erb :"/users/edit.html"
-  #end
-
-  # PATCH: /users/5
-  #patch "/users/:id" do
-  #  redirect "/users/:id"
-  #end
-
-  # DELETE: /users/5/delete
-  #delete "/users/:id/delete" do
- #   redirect "/users"
- # end
 end
